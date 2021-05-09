@@ -1,0 +1,45 @@
+package com.rtjvm.scala.oop.filesystem
+
+/*
+
+@Author: Chinmay Chaudhari
+Date: 25 - 04 - 2021
+
+*/
+
+import com.rtjvm.scala.oop.commands.Command
+import com.rtjvm.scala.oop.files.Directory
+
+import java.util.Scanner
+
+object FileSystem extends App {
+
+  val root = Directory.ROOT
+
+  /*
+  [1,2,3,4]
+  0 (op) 1 => 1
+  1 (op) 2 => 3
+  3 (op) 3 => 6
+  6 (op) 4 => 10
+
+  List(1,2,3,4).foldLeft(0)((x,y) => x + y)
+   */
+
+  io.Source.stdin.getLines.foldLeft(State(root,root))((currentState, newLine) => {
+    currentState.show
+    Command.from(newLine).apply(currentState)
+  })
+
+  // Upper implementation is equivalent to below code snippet
+
+/*  var state = State(root, root)
+  val scanner = new Scanner(System.in)
+
+  while(true) {
+    state.show()
+    val input = scanner.nextLine()
+    state = Command.from(input).apply(state)
+  }*/
+
+}
